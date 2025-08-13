@@ -1,0 +1,15 @@
+{
+	"name": "RawSalesTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LK_RawSalesTable",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "sales"
+		}
+	}
+}
