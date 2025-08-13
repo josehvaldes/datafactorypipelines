@@ -1,0 +1,12 @@
+{
+	"name": "LN_DailySales_Blob",
+	"properties": {
+		"description": "linked service to blob container",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://stdailysales.blob.core.windows.net/",
+			"accountKind": "StorageV2"
+		}
+	}
+}
