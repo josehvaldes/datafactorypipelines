@@ -1,0 +1,9 @@
+{
+	"name": "dfactory-test-01",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2787d3c0-f814-4f60-8f7a-650831344cb9",
+		"tenantId": "5bdb18df-67db-40e0-a1df-145af0bbef1d"
+	}
+}
