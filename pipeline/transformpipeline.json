@@ -1,0 +1,144 @@
+{
+	"name": "transformpipeline",
+	"properties": {
+		"description": "Read Table storage and do a daily aggregation to a CSV file",
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureTableSource",
+						"azureTableSourceQuery": {
+							"value": "PartitionKey eq 'pipeline().parameters.partitionkey' and Timestamp ge datetime'@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}T00:00:00Z' and Timestamp lt datetime'@{formatDateTime(utcNow(),'yyyy-MM-dd')}T00:00:00Z'\n\n",
+							"type": "Expression"
+						},
+						"azureTableSourceIgnoreTableNotFound": false
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PartitionKey"
+								},
+								"sink": {
+									"name": "PartitionKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "RowKey"
+								},
+								"sink": {
+									"name": "RowKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Timestamp"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "username"
+								},
+								"sink": {
+									"name": "username",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "price"
+								},
+								"sink": {
+									"name": "price",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "quantity"
+								},
+								"sink": {
+									"name": "quantity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "productname"
+								},
+								"sink": {
+									"name": "productname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clienttaxnum"
+								},
+								"sink": {
+									"name": "clienttaxnum",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RawSalesTable",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "domainsales",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"partitionkey": {
+				"type": "String",
+				"defaultValue": "bo"
+			}
+		},
+		"annotations": []
+	}
+}

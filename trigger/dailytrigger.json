@@ -1,0 +1,27 @@
+{
+	"name": "dailytrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "transformpipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"partitionkey": "bo"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2025-08-14T00:00:00",
+				"timeZone": "SA Western Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,55 @@
+{
+	"name": "domainsales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LK_BODomainBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "bosales"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PartitionKey",
+				"type": "String"
+			},
+			{
+				"name": "RowKey",
+				"type": "String"
+			},
+			{
+				"name": "Timestamp",
+				"type": "String"
+			},
+			{
+				"name": "username",
+				"type": "String"
+			},
+			{
+				"name": "price",
+				"type": "String"
+			},
+			{
+				"name": "quantity",
+				"type": "String"
+			},
+			{
+				"name": "productname",
+				"type": "String"
+			},
+			{
+				"name": "clienttaxnum",
+				"type": "String"
+			}
+		]
+	}
+}
