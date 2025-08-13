@@ -1,0 +1,11 @@
+{
+	"name": "LK_RawSalesTable",
+	"properties": {
+		"description": "linked service to raw sales table storage",
+		"annotations": [],
+		"type": "AzureTableStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://strawsalestest01.table.core.windows.net/"
+		}
+	}
+}
