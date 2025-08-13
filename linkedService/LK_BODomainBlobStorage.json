@@ -1,0 +1,12 @@
+{
+	"name": "LK_BODomainBlobStorage",
+	"properties": {
+		"description": "linked service to the BO domain raw sales",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://stdailysales.blob.core.windows.net/",
+			"accountKind": "StorageV2"
+		}
+	}
+}
