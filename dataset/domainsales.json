@@ -21,7 +21,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "dailysales_dataset().partition_@{dataset().datetime}.csv\n",
+					"value": "dailysales_@{dataset().partition}_@{dataset().datetime}.csv",
 					"type": "Expression"
 				},
 				"container": {
