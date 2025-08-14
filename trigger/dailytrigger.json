@@ -2,8 +2,18 @@
 	"name": "dailytrigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "transformpipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"partitionkey": "us"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
