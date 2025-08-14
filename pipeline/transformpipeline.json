@@ -128,7 +128,17 @@
 				"outputs": [
 					{
 						"referenceName": "domainsales",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"datetime": {
+								"value": "@{formatDateTime(utcNow(),'yyyy-MM-dd')}",
+								"type": "Expression"
+							},
+							"partition": {
+								"value": "@pipeline().parameters.partitionkey",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}

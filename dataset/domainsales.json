@@ -5,12 +5,29 @@
 			"referenceName": "LK_BODomainBlobStorage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"datetime": {
+				"type": "string",
+				"defaultValue": "20250814"
+			},
+			"partition": {
+				"type": "string",
+				"defaultValue": "bo"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "bosales"
+				"fileName": {
+					"value": "dailysales_dataset().partition_@{dataset().datetime}.csv\n",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@{dataset().partition}sales",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
