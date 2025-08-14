@@ -8,7 +8,7 @@
 		"parameters": {
 			"datetime": {
 				"type": "string",
-				"defaultValue": "20250814"
+				"defaultValue": "2025-08-14"
 			},
 			"partition": {
 				"type": "string",

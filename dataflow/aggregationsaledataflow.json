@@ -1,0 +1,44 @@
+{
+	"name": "aggregationsaledataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "domainsales",
+						"type": "DatasetReference"
+					},
+					"name": "domainsalessource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PartitionKey as string,",
+				"          RowKey as string,",
+				"          Timestamp as string,",
+				"          username as string,",
+				"          price as double,",
+				"          quantity as integer,",
+				"          productname as string,",
+				"          clienttaxnum as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     limit: 10,",
+				"     ignoreNoFilesFound: false,",
+				"     skipLines: 1) ~> domainsalessource",
+				"domainsalessource aggregate(groupBy(PartitionKey,",
+				"          productname),",
+				"     price = sum(price),",
+				"          quantity = sum(quantity)) ~> aggregate1"
+			]
+		}
+	}
+}
