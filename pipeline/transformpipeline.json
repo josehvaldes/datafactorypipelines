@@ -19,7 +19,7 @@
 					"source": {
 						"type": "AzureTableSource",
 						"azureTableSourceQuery": {
-							"value": "PartitionKey eq 'pipeline().parameters.partitionkey' and Timestamp ge datetime'@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}T00:00:00Z' and Timestamp lt datetime'@{formatDateTime(utcNow(),'yyyy-MM-dd')}T00:00:00Z'\n\n\n\n",
+							"value": "PartitionKey eq '@{pipeline().parameters.partitionkey}' and Timestamp ge datetime'@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}T00:00:00Z' and Timestamp lt datetime'@{formatDateTime(utcNow(),'yyyy-MM-dd')}T00:00:00Z'\n",
 							"type": "Expression"
 						},
 						"azureTableSourceIgnoreTableNotFound": false
