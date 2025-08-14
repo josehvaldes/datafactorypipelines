@@ -1,5 +1,5 @@
 {
-	"name": "aggregationsaledataflow",
+	"name": "Aggregationsaledataflow",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,16 +9,28 @@
 						"referenceName": "domainsales",
 						"type": "DatasetReference"
 					},
-					"name": "domainsalessource"
+					"name": "DFDomainSalesSource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AggregatedDailySales",
+						"type": "DatasetReference"
+					},
+					"name": "OutputSink01"
+				}
+			],
 			"transformations": [
 				{
-					"name": "aggregate1"
+					"name": "aggregation"
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     partitionkey as string ('bo'),",
+				"     datetime as string ('2025-08-13')",
+				"}",
 				"source(output(",
 				"          PartitionKey as string,",
 				"          RowKey as string,",
@@ -32,12 +44,24 @@
 				"     allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     limit: 10,",
-				"     ignoreNoFilesFound: false,",
-				"     skipLines: 1) ~> domainsalessource",
-				"domainsalessource aggregate(groupBy(PartitionKey,",
+				"     ignoreNoFilesFound: false) ~> DFDomainSalesSource",
+				"DFDomainSalesSource aggregate(groupBy(PartitionKey,",
 				"          productname),",
 				"     price = sum(price),",
-				"          quantity = sum(quantity)) ~> aggregate1"
+				"          quantity = sum(quantity)) ~> aggregation",
+				"aggregation sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          domain as string,",
+				"          productname as string,",
+				"          year as string,",
+				"          month as string,",
+				"          day as string,",
+				"          quantity as string,",
+				"          totalprice as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OutputSink01"
 			]
 		}
 	}

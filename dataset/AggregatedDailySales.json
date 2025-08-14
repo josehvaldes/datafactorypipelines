@@ -5,12 +5,25 @@
 			"referenceName": "LN_DailySales_Blob",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"partitionkey": {
+				"type": "string",
+				"defaultValue": "bo"
+			},
+			"datetime": {
+				"type": "string",
+				"defaultValue": "2025-08-10"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "test1.csv",
+				"fileName": {
+					"value": "sales_@{dataset().partitionkey}_@{dataset().datetime}.csv\n",
+					"type": "Expression"
+				},
 				"container": "dailysales"
 			},
 			"columnDelimiter": ",",

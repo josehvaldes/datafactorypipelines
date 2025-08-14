@@ -27,7 +27,8 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -131,7 +132,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"datetime": {
-								"value": "@{formatDateTime(utcNow(),'yyyy-MM-dd')}",
+								"value": "@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}",
 								"type": "Expression"
 							},
 							"partition": {
@@ -141,6 +142,63 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Aggregation Data flow 01",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Copy Filter Sales Data to CSV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Aggregationsaledataflow",
+						"type": "DataFlowReference",
+						"parameters": {
+							"partitionkey": {
+								"value": "'@{pipeline().parameters.partitionkey}'",
+								"type": "Expression"
+							},
+							"datetime": {
+								"value": "'@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"DFDomainSalesSource": {
+								"datetime": {
+									"value": "@{formatDateTime(addDays(utcNow(),-1),'yyyy-MM-dd')}",
+									"type": "Expression"
+								},
+								"partition": {
+									"value": "@pipeline().parameters.partitionkey",
+									"type": "Expression"
+								}
+							},
+							"OutputSink01": {
+								"partitionkey": "bo",
+								"datetime": "2025-08-13"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Coarse"
+				}
 			}
 		],
 		"parameters": {
