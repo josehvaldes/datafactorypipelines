@@ -199,6 +199,33 @@
 					},
 					"traceLevel": "Coarse"
 				}
+			},
+			{
+				"name": "transformPython",
+				"type": "DatabricksSparkPython",
+				"dependsOn": [
+					{
+						"activity": "Copy Filter Sales Data to CSV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pythonFile": "dbfs:/Users/jmurguia@gmail.com/docs/test.py"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
